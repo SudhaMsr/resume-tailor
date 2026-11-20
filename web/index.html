@@ -90,6 +90,31 @@
       </div>
     </section>
 
+    <section id="prep" class="card">
+      <h2><span class="step">5</span> Interview prep</h2>
+      <p class="hint">Questions based on the job in step 1 and your CV (the tailored one if you have made it). Free to use, no AI service involved.</p>
+      <div class="row">
+        <button type="button" class="primary" id="prepBtn">Prepare my interview questions</button>
+        <button type="button" class="ghost" id="practiceBtn" hidden>Practice mode</button>
+        <button type="button" class="ghost" id="printBtn" hidden>Print or save as PDF</button>
+      </div>
+      <p id="prepStatus" class="status" role="status" aria-live="polite"></p>
+      <div id="practice" class="practice" hidden>
+        <p class="hint" id="pCount"></p>
+        <h3 id="pQ"></h3>
+        <p class="score" id="pTimer">2:00</p>
+        <div id="pHint" hidden></div>
+        <div class="row">
+          <button type="button" class="ghost" id="pPrev">Previous</button>
+          <button type="button" class="primary" id="pStart">Start 2 minute timer</button>
+          <button type="button" class="ghost" id="pShow">Show hint</button>
+          <button type="button" class="ghost" id="pNext">Next</button>
+          <button type="button" class="ghost" id="pClose">Close</button>
+        </div>
+      </div>
+      <div id="prepOut"></div>
+    </section>
+
     <section id="mycvs" class="card">
       <h2>My CVs</h2>
       <p class="hint">Every CV you download is saved here by company name.</p>
