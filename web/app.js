@@ -209,6 +209,74 @@
   $('fineBtn').addEventListener('click', download);
   $('downloadBtn').addEventListener('click', download);
 
+  // ---------- interview prep ----------
+  const PREP_KEY = 'rt.prep.v1';
+  let prep = null;
+  const prepStatus = (msg, isError) => { const s = $('prepStatus'); s.textContent = msg || ''; s.className = `status${isError ? ' error' : ''}`; };
+  const noteKey = (id) => `${(prep.company || '').toLowerCase()}|${id}`;
+  const flatQuestions = () => (prep ? prep.sections.flatMap((s) => s.items) : []);
+
+  function evidenceBox(ev) {
+    return ev ? el('blockquote', { class: 'ev' }, `“${ev.text}”`, el('small', {}, `From your CV: ${ev.source}`)) : null;
+  }
+
+  function drawPrep() {
+    const out = $('prepOut');
+    const m = prep.match;
+    out.replaceChildren(
+      el('p', { class: 'score' }, el('strong', {}, `${prep.total} questions`), ` · your CV matches ${m.score}% of what the job asks for`),
+      el('details', { class: 'group' }, el('summary', {}, 'How to answer: the STAR method'),
+        el('ul', {}, prep.star.map(([k, v]) => el('li', {}, el('strong', {}, `${k}: `), v)))),
+      ...prep.sections.map((sec) => el('div', { class: 'qlist' },
+        el('h3', {}, sec.title), el('p', { class: 'hint' }, sec.intro),
+        ...sec.items.map((q) => {
+          const ta = el('textarea', { rows: 5, maxlength: 3000, placeholder: 'Your answer in your own words: Situation, Task, Action, Result' });
+          ta.value = load(PREP_KEY, {})[noteKey(q.id)] || '';
+          ta.addEventListener('input', () => { const all = load(PREP_KEY, {}); all[noteKey(q.id)] = ta.value; save(PREP_KEY, all); });
+          return el('details', { class: 'group' }, el('summary', {}, q.question), el('p', {}, q.tip), evidenceBox(q.evidence), el('label', {}, 'Your notes (saved in this browser)', ta));
+        })))
+    );
+    $('practiceBtn').hidden = false; $('printBtn').hidden = false;
+  }
+
+  $('prepBtn').addEventListener('click', async () => {
+    const company = $('company').value.trim();
+    const job = $('job').value.trim();
+    const cv = tailored || profile;
+    if (job.length < 40) return prepStatus('Paste the job description in step 1 first.', true);
+    if (!cv.basics.name.trim()) return prepStatus('Fill in your CV first (at least your name).', true);
+    const btn = $('prepBtn'); btn.disabled = true; prepStatus('Preparing your questions…');
+    try {
+      prep = await (await api('/api/interview', { cv, job, company })).json();
+      drawPrep(); prepStatus('');
+      $('prepOut').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch (e) { prepStatus(e.message, true); } finally { btn.disabled = false; }
+  });
+
+  // practice mode: one question at a time with a timer
+  let pIdx = 0; let pTimer = null; let pLeft = 120;
+  const fmt = (n) => `${Math.floor(n / 60)}:${String(n % 60).padStart(2, '0')}`;
+  function stopTimer() { if (pTimer) { clearInterval(pTimer); pTimer = null; } }
+  function showQ() {
+    const qs = flatQuestions(); const q = qs[pIdx];
+    stopTimer(); pLeft = 120;
+    $('pCount').textContent = `Question ${pIdx + 1} of ${qs.length}`;
+    $('pQ').textContent = q.question; $('pTimer').textContent = fmt(pLeft);
+    $('pHint').hidden = true; $('pHint').replaceChildren(el('p', {}, q.tip), evidenceBox(q.evidence));
+    $('pShow').textContent = 'Show hint'; $('pStart').textContent = 'Start 2 minute timer';
+  }
+  $('practiceBtn').addEventListener('click', () => { if (!prep) return; pIdx = 0; $('practice').hidden = false; showQ(); $('practice').scrollIntoView({ behavior: 'smooth' }); });
+  $('pNext').addEventListener('click', () => { pIdx = (pIdx + 1) % flatQuestions().length; showQ(); });
+  $('pPrev').addEventListener('click', () => { const n = flatQuestions().length; pIdx = (pIdx - 1 + n) % n; showQ(); });
+  $('pClose').addEventListener('click', () => { stopTimer(); $('practice').hidden = true; });
+  $('pShow').addEventListener('click', () => { const h = $('pHint'); h.hidden = !h.hidden; $('pShow').textContent = h.hidden ? 'Show hint' : 'Hide hint'; });
+  $('pStart').addEventListener('click', () => {
+    if (pTimer) { stopTimer(); $('pStart').textContent = 'Restart timer'; return; }
+    pLeft = 120; $('pTimer').textContent = fmt(pLeft); $('pStart').textContent = 'Stop timer';
+    pTimer = setInterval(() => { pLeft -= 1; $('pTimer').textContent = fmt(Math.max(pLeft, 0)); if (pLeft <= 0) { stopTimer(); $('pStart').textContent = 'Restart timer'; } }, 1000);
+  });
+  $('printBtn').addEventListener('click', () => { document.querySelectorAll('#prepOut details').forEach((d) => { d.open = true; }); window.print(); });
+
   // ---------- My CVs ----------
   function saveCv(fileName) {
     const list = load(SAVED_KEY, []).filter((x) => x.fileName !== fileName);
