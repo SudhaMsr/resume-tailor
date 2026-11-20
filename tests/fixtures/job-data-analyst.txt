@@ -1,0 +1,16 @@
+Data Analyst - Graduate Scheme
+
+We are looking for a Data Analyst to join our analytics team. You will build dashboards in Tableau and Power BI, write SQL queries against our data warehouse and clean and analyse customer data using Python.
+
+Responsibilities
+- Build and maintain dashboards and reports for stakeholders
+- Write SQL queries and automate reporting with Python
+- Work with product teams to run A/B tests and present insights
+- Communicate findings clearly to non-technical audiences
+
+Requirements
+- Degree in a quantitative subject
+- Experience with SQL and Python
+- Experience with data visualisation tools such as Tableau or Power BI
+- Strong communication skills and stakeholder management
+- Knowledge of statistics and A/B testing is a plus
