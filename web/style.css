@@ -54,3 +54,15 @@ blockquote.ev small { display:block; color:var(--muted); margin-top:2px; }
 .practice h3 { font-size:1.2rem; margin:6px 0; }
 .qlist summary { font-weight:500; }
 @media print { .top, .hero, .foot, #tailor, section.card:not(#prep), .row, .practice, #prepStatus { display:none !important; } #prep { border:0; } textarea { border:1px solid #999; } }
+.trkform { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; }
+.trkform label { display:block; font-size:.9rem; color:var(--muted); }
+.trkform input, .trkform select { width:100%; margin-top:4px; }
+.appcard { border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:10px; padding:12px; margin:10px 0; background:#fbfcfd; }
+.appcard.s-offer { border-left-color:var(--ok); }
+.appcard.s-rejected { border-left-color:#a31919; opacity:.8; }
+.apphead { display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center; }
+.appcard textarea { width:100%; margin-top:8px; }
+.due { color:#a31919; font-weight:600; }
+.offerbox { margin-top:10px; padding:10px 12px; background:#f0f9f4; border-radius:8px; }
+.offerbox ul { list-style:none; padding:0; margin:8px 0 0; }
+.offerbox li { margin:6px 0; }
