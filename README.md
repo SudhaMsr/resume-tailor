@@ -12,11 +12,13 @@ Paste a job description, keep your real CV, and get a tailored CV as a clean LaT
 4. Shows a job-match score and the job keywords the CV does not mention, so the student can
    add them if they are true. It never writes claims of its own, so it cannot invent anything.
 
+Students can upload a PDF or Word CV (or paste text, e.g. from LinkedIn's "Save to PDF") and the form is filled in for them to check. This is rule-based text parsing (`pdftotext` and a small DOCX reader), with no external service.
+
 Edits are done by changing the text directly in the form, then updating the preview.
 
 ## Run locally
 
-Needs Node 22 and a TeX Live install (`pdflatex`; plus `lato` and `fontawesome5` for the exact look).
+Needs Node 22, `pdftotext` (poppler-utils) for PDF import, and a TeX Live install (`pdflatex`; plus `lato` and `fontawesome5` for the exact look).
 
 ```sh
 npm test
