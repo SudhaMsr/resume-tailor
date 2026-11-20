@@ -105,6 +105,35 @@
   $('loadSample').addEventListener('click', () => { profile = SAMPLE(); save(PROFILE_KEY, profile); drawProfile(); });
   $('clearProfile').addEventListener('click', () => { if (confirm('Clear your saved CV from this browser?')) { profile = EMPTY(); save(PROFILE_KEY, profile); drawProfile(); } });
 
+  // ---------- import (file or pasted text) ----------
+  const importStatus = (msg, isError) => { const s = $('importStatus'); s.textContent = msg || ''; s.className = `status${isError ? ' error' : ''}`; };
+  async function runImport(init, label) {
+    if (profile.basics.name.trim() && !confirm('This will replace the CV currently in the form. Continue?')) return;
+    importStatus(`Reading ${label}…`); $('importWarnings').replaceChildren();
+    try {
+      let res;
+      try { res = await fetch(`${API}/api/import`, { method: 'POST', ...init }); } catch (e) { throw new Error('Cannot reach the server. Check your connection and try again.'); }
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Could not read that. Please try again.');
+      profile = Object.assign(EMPTY(), data.cv); save(PROFILE_KEY, profile); drawProfile();
+      const c = data.cv;
+      importStatus(`Filled in: ${c.experience.length} job(s), ${c.education.length} education, ${c.projects.length} project(s), ${c.skills.length} skills row(s). Please check every section below.`);
+      $('importWarnings').replaceChildren(...(data.warnings || []).map((w) => el('li', {}, w)));
+    } catch (e) { importStatus(e.message, true); }
+  }
+  $('cvFile').addEventListener('change', async (ev) => {
+    const f = ev.target.files && ev.target.files[0];
+    if (!f) return;
+    if (f.size > 3 * 1024 * 1024) { importStatus('That file is too big (limit 3 MB).', true); ev.target.value = ''; return; }
+    await runImport({ headers: { 'content-type': 'application/octet-stream', 'x-filename': encodeURIComponent(f.name) }, body: f }, f.name);
+    ev.target.value = '';
+  });
+  $('pasteBtn').addEventListener('click', () => {
+    const text = $('pasteText').value;
+    if (text.trim().length < 40) return importStatus('Please paste more of your CV text.', true);
+    runImport({ headers: { 'content-type': 'application/json' }, body: JSON.stringify({ text }) }, 'your text');
+  });
+
   // ---------- API ----------
   async function api(path, body) {
     let res;
