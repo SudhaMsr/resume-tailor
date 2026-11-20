@@ -115,6 +115,25 @@
       <div id="prepOut"></div>
     </section>
 
+    <section id="tracker" class="card">
+      <h2>Applications</h2>
+      <p class="hint">Keep track of where you applied. Move a job to Offer to get a checklist before you accept. Saved in this browser only.</p>
+      <div class="trkform">
+        <label>Company <input id="trkCompany" maxlength="120"></label>
+        <label>Role <input id="trkRole" maxlength="160"></label>
+        <label>Job post link (optional) <input id="trkLink" type="url" maxlength="500" placeholder="https://"></label>
+        <label>Status <select id="trkStatus"><option>Saved</option><option selected>Applied</option><option>Interview</option><option>Offer</option><option>Rejected</option></select></label>
+        <label>Follow up on <input id="trkFollow" type="date"></label>
+      </div>
+      <div class="row">
+        <button id="trkAdd" type="button" class="primary">Add application</button>
+        <button id="trkFromStep1" type="button" class="ghost">Use company from step 1</button>
+      </div>
+      <p id="trkStatusMsg" class="status"></p>
+      <p id="trkSummary" class="hint"></p>
+      <div id="trkList"></div>
+    </section>
+
     <section id="mycvs" class="card">
       <h2>My CVs</h2>
       <p class="hint">Every CV you download is saved here by company name.</p>
@@ -127,5 +146,6 @@
   </footer>
   <script src="config.js"></script>
   <script src="app.js"></script>
+  <script src="tracker.js"></script>
 </body>
 </html>
