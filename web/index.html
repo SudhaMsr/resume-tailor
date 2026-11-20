@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resume Tailor: a CV matched to every job</title>
+  <meta name="description" content="Paste a job description, keep your real experience, and get a tailored CV as a clean LaTeX PDF.">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <strong class="brand">Resume Tailor</strong>
+      <nav><a href="#tailor">Tailor</a><a href="#mycvs">My CVs</a></nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1>One CV. Tailored to every job.</h1>
+      <p>Paste the job, add your CV once, and get a clean PDF that puts your most relevant experience first. Nothing is invented: it only uses what you wrote.</p>
+    </section>
+
+    <section id="tailor" class="card">
+      <h2><span class="step">1</span> The job</h2>
+      <label>Company name
+        <input id="company" type="text" maxlength="60" placeholder="e.g. Acme" autocomplete="off">
+      </label>
+      <label>Job description
+        <textarea id="job" rows="8" maxlength="20000" placeholder="Paste the full job description here"></textarea>
+      </label>
+      <label>Length
+        <select id="maxPages"><option value="2">Up to 2 pages</option><option value="1">1 page</option></select>
+      </label>
+    </section>
+
+    <section class="card">
+      <h2><span class="step">2</span> Your CV</h2>
+      <p class="hint">Fill this in once. It is saved only in this browser.</p>
+      <div class="row">
+        <button type="button" class="ghost" id="loadSample">Load an example</button>
+        <button type="button" class="ghost" id="clearProfile">Clear</button>
+      </div>
+      <div id="profileForm"></div>
+    </section>
+
+    <section class="card">
+      <h2><span class="step">3</span> Tailor</h2>
+      <button type="button" class="primary" id="tailorBtn">Tailor my CV</button>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section id="result" class="card" hidden>
+      <h2><span class="step">4</span> Your tailored CV</h2>
+      <div id="report"></div>
+      <div class="preview">
+        <iframe id="pdfFrame" title="CV preview"></iframe>
+        <p class="hint"><a id="openPdf" target="_blank" rel="noopener">Open the preview in a new tab</a> (easier on a phone)</p>
+      </div>
+      <div id="decision">
+        <p><strong>Is this good to go?</strong></p>
+        <div class="row">
+          <button type="button" class="primary" id="fineBtn">Yes, download</button>
+          <button type="button" class="ghost" id="editBtn">I want edits</button>
+        </div>
+      </div>
+      <div id="editor" hidden>
+        <h3>Edit your tailored CV</h3>
+        <p class="hint">Change any text, remove or add lines, then update the preview.</p>
+        <div id="tailoredForm"></div>
+        <div class="row">
+          <button type="button" class="ghost" id="updateBtn">Update preview</button>
+          <button type="button" class="primary" id="downloadBtn">Download</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="mycvs" class="card">
+      <h2>My CVs</h2>
+      <p class="hint">Every CV you download is saved here by company name.</p>
+      <ul id="savedList" class="saved"></ul>
+    </section>
+  </main>
+
+  <footer class="wrap foot">
+    <p>Layout based on the MIT-licensed sb2nov resume template. Your CV is processed to build the PDF and is not stored on the server.</p>
+  </footer>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
