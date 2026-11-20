@@ -6,6 +6,8 @@ const { compileCv, FULL_FONTS } = require('./compile');
 const { tailorCv } = require('./tailor');
 const { sanitizeCv } = require('./validate');
 const { cvFileName } = require('./render');
+const { extractText } = require('./extract');
+const { parseCvText } = require('./parse');
 
 const PORT = Number(process.env.PORT || 8080);
 const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || '';
@@ -41,7 +43,7 @@ function send(res, status, body, headers = {}) {
     'X-Content-Type-Options': 'nosniff',
     'Referrer-Policy': 'no-referrer',
     'Cache-Control': 'no-store',
-    ...(ALLOWED_ORIGIN ? { 'Access-Control-Allow-Origin': ALLOWED_ORIGIN, 'Access-Control-Allow-Headers': 'content-type', 'Access-Control-Expose-Headers': 'X-Pages, Content-Disposition' } : {}),
+    ...(ALLOWED_ORIGIN ? { 'Access-Control-Allow-Origin': ALLOWED_ORIGIN, 'Access-Control-Allow-Headers': 'content-type, x-filename', 'Access-Control-Expose-Headers': 'X-Pages, Content-Disposition' } : {}),
   };
   res.writeHead(status, { ...common, ...headers });
   res.end(body);
@@ -59,7 +61,38 @@ function readBody(req) {
   });
 }
 
+function readRaw(req, limit) {
+  return new Promise((resolve, reject) => {
+    let size = 0; const chunks = [];
+    req.on('data', (c) => { size += c.length; if (size > limit) { reject(Object.assign(new Error('That file is too big (limit 3 MB).'), { status: 413 })); req.destroy(); } else chunks.push(c); });
+    req.on('end', () => resolve(Buffer.concat(chunks)));
+    req.on('error', reject);
+  });
+}
+
+// Upload (PDF/DOCX as raw bytes) or pasted text (JSON {text}) -> CV for the student to review.
+async function handleImport(req, res) {
+  const isJson = String(req.headers['content-type'] || '').startsWith('application/json');
+  let text; let buf; let filename = '';
+  if (isJson) {
+    const body = await readBody(req);
+    text = typeof body.text === 'string' ? body.text.slice(0, 60000) : '';
+    if (text.trim().length < 40) return json(res, 400, { error: 'Please paste more of your CV text.' });
+  } else {
+    buf = await readRaw(req, 3 * 1024 * 1024 + 1024);
+    try { filename = decodeURIComponent(String(req.headers['x-filename'] || '')).slice(0, 200); } catch (e) { filename = ''; }
+  }
+  const result = await gate(async () => {
+    if (text === undefined) text = await extractText(buf, filename);
+    let r = parseCvText(text);
+    if (buf && r.noSections) { try { const raw = await extractText(buf, filename, { layout: false }); const r2 = parseCvText(raw); if (!r2.noSections) r = r2; } catch (e) { /* keep first result */ } }
+    return r;
+  });
+  return json(res, 200, { cv: sanitizeCv(result.cv), warnings: result.warnings });
+}
+
 async function handleApi(req, res, url) {
+  if (url.pathname === '/api/import') return handleImport(req, res);
   const body = await readBody(req);
   if (url.pathname === '/api/tailor') {
     const jobText = typeof body.job === 'string' ? body.job.slice(0, MAX_JOB) : '';
