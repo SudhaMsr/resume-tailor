@@ -48,3 +48,9 @@ button.danger { color:#a31919; border-color:#e2b8b8; background:#fff; }
 .importbox { margin:12px 0 4px; }
 .filebtn { display:block; padding:14px; border:2px dashed #9db7ff; border-radius:10px; background:#f5f8ff; color:var(--ink); font-weight:600; cursor:pointer; margin:0; }
 .filebtn input { margin-top:8px; font-weight:400; border:0; padding:0; }
+blockquote.ev { margin:8px 0; padding:8px 12px; border-left:3px solid var(--accent); background:#f5f8ff; border-radius:0 8px 8px 0; font-size:.95rem; }
+blockquote.ev small { display:block; color:var(--muted); margin-top:2px; }
+.practice { border:2px solid var(--accent); border-radius:12px; padding:14px; margin:12px 0; background:#fbfcff; }
+.practice h3 { font-size:1.2rem; margin:6px 0; }
+.qlist summary { font-weight:500; }
+@media print { .top, .hero, .foot, #tailor, section.card:not(#prep), .row, .practice, #prepStatus { display:none !important; } #prep { border:0; } textarea { border:1px solid #999; } }
