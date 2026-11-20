@@ -1,0 +1,186 @@
+{
+ "basics": {
+  "name": "Jane Example",
+  "title": "Data Analyst",
+  "phone": "+44 7000 000000",
+  "email": "jane.example@example.com",
+  "linkedin": "janeexample",
+  "github": "janeexample",
+  "location": "Bristol, UK",
+  "extra": ""
+ },
+ "summary": "Data analyst with a Master's degree in Data Science and hands-on experience in Python, SQL and dashboarding. Keen to turn messy data into clear decisions.",
+ "skills": [
+  {
+   "label": "Programming Languages",
+   "items": "Python, SQL, R, JavaScript"
+  },
+  {
+   "label": "Tools & Technologies",
+   "items": "Tableau, Excel, Power BI, scikit-learn, Pandas, Flask"
+  },
+  {
+   "label": "Cloud",
+   "items": "Amazon Web Services (AWS), Google Cloud Platform"
+  },
+  {
+   "label": "Soft Skills",
+   "items": "Communication, Teamwork, Problem-solving"
+  }
+ ],
+ "experience": [
+  {
+   "role": "Data Analyst Intern",
+   "company": "Northwind Analytics",
+   "location": "Remote",
+   "dates": "Jun 2025 -- Sep 2025",
+   "type": "Internship",
+   "bullets": [
+    "Built a **Tableau** dashboard tracking weekly sales that three teams used in their Monday meetings.",
+    "Cleaned and joined 50,000+ customer records with Python and SQL, cutting report preparation time.",
+    "Wrote SQL queries to support A/B test analysis for the marketing team.",
+    "Presented findings to non-technical stakeholders in weekly reviews.",
+    "Documented data definitions for the analytics team wiki."
+   ]
+  },
+  {
+   "role": "Research Assistant",
+   "company": "University of Examplehampton",
+   "location": "Bristol, UK",
+   "dates": "Jan 2025 -- May 2025",
+   "type": "Part-time",
+   "bullets": [
+    "Analysed survey data from 1,200 respondents using R and presented results in a short report.",
+    "Created visualisations of survey results for a conference poster.",
+    "Cleaned inconsistent survey responses and documented every change.",
+    "Coordinated with two supervisors to schedule interviews."
+   ]
+  },
+  {
+   "role": "Machine Learning Intern",
+   "company": "Contoso Labs",
+   "location": "London, UK",
+   "dates": "Jun 2024 -- Aug 2024",
+   "type": "Internship",
+   "bullets": [
+    "Trained a random forest classifier in scikit-learn to flag customers likely to churn.",
+    "Deployed a small Flask service that returned churn scores to the support team.",
+    "Compared three models and reported precision and recall to the team.",
+    "Wrote unit tests for the feature engineering code."
+   ]
+  },
+  {
+   "role": "Customer Support Associate",
+   "company": "Fabrikam Retail",
+   "location": "Bristol, UK",
+   "dates": "Sep 2022 -- Aug 2023",
+   "type": "Part-time",
+   "bullets": [
+    "Resolved customer queries by phone and email with a strong satisfaction record.",
+    "Trained four new colleagues on the ticketing system.",
+    "Reported recurring issues to the product team each month.",
+    "Handled cash and card payments accurately in a busy store."
+   ]
+  },
+  {
+   "role": "Student Ambassador",
+   "company": "University of Examplehampton",
+   "location": "Bristol, UK",
+   "dates": "Sep 2021 -- Jun 2022",
+   "type": "Volunteer",
+   "bullets": [
+    "Guided prospective students around campus during open days.",
+    "Answered questions about courses and student life.",
+    "Wrote short blog posts about student life."
+   ]
+  }
+ ],
+ "projects": [
+  {
+   "name": "Customer Churn Predictor",
+   "tech": "Python, scikit-learn, Flask",
+   "dates": "2025",
+   "bullets": [
+    "Built an end-to-end churn model with feature engineering and cross-validation.",
+    "Served predictions through a Flask API with simple input validation.",
+    "Tracked experiments in a spreadsheet and compared model variants.",
+    "Wrote a README explaining how to reproduce results."
+   ]
+  },
+  {
+   "name": "Sales Dashboard",
+   "tech": "Tableau, SQL",
+   "dates": "2024",
+   "bullets": [
+    "Designed an interactive dashboard of regional sales with drill-down filters.",
+    "Wrote SQL views to feed the dashboard from a PostgreSQL database.",
+    "Added tooltips and colour choices that work for colour-blind users."
+   ]
+  },
+  {
+   "name": "Campus Bike Share Map",
+   "tech": "JavaScript, Leaflet",
+   "dates": "2023",
+   "bullets": [
+    "Built a small web map showing bike stations and availability.",
+    "Added a search box to find the nearest free bike.",
+    "Hosted the site for free on GitHub Pages."
+   ]
+  }
+ ],
+ "certifications": [
+  {
+   "name": "Google Data Analytics",
+   "issuer": "Coursera"
+  },
+  {
+   "name": "Python for Data Science",
+   "issuer": "IBM"
+  },
+  {
+   "name": "SQL Fundamentals",
+   "issuer": "DataCamp"
+  }
+ ],
+ "education": [
+  {
+   "school": "University of Examplehampton",
+   "degree": "Master of Science in Data Science",
+   "location": "Bristol, UK",
+   "dates": "Sep 2023 --- Jan 2025",
+   "details": [
+    "**Relevant Coursework:** Statistics, Machine Learning, Data Visualisation, Databases",
+    "**Achievements:** Distinction in dissertation project"
+   ]
+  },
+  {
+   "school": "Example State University",
+   "degree": "Bachelor of Science in Mathematics",
+   "location": "Leeds, UK",
+   "dates": "Sep 2019 --- Jun 2022",
+   "details": [
+    "**Relevant Coursework:** Linear Algebra, Probability, Numerical Methods"
+   ]
+  }
+ ],
+ "competitions": [
+  {
+   "name": "University Datathon",
+   "issuer": "University of Examplehampton"
+  },
+  {
+   "name": "Regional Hackathon",
+   "issuer": "TechWest"
+  }
+ ],
+ "activities": [
+  {
+   "name": "Chess Club Treasurer",
+   "issuer": "University of Examplehampton"
+  },
+  {
+   "name": "Volunteer",
+   "issuer": "Local Food Bank"
+  }
+ ]
+}
