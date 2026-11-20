@@ -42,6 +42,20 @@
         <button type="button" class="ghost" id="loadSample">Load an example</button>
         <button type="button" class="ghost" id="clearProfile">Clear</button>
       </div>
+      <div class="importbox">
+        <label class="filebtn">Upload your CV (PDF or Word)
+          <input type="file" id="cvFile" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+        </label>
+        <p class="hint">We read your file and fill in the form below. Check it before you tailor. Max 3 MB.</p>
+        <details class="group">
+          <summary>LinkedIn, or paste your CV text instead</summary>
+          <p class="hint">LinkedIn does not let other sites read profiles. Open your own profile, choose <strong>More</strong> then <strong>Save to PDF</strong>, and upload that PDF above. Or paste your CV text here.</p>
+          <textarea id="pasteText" rows="6" maxlength="60000" placeholder="Paste your CV text here"></textarea>
+          <div class="row"><button type="button" class="ghost" id="pasteBtn">Fill my CV from this text</button></div>
+        </details>
+        <p id="importStatus" class="status" role="status" aria-live="polite"></p>
+        <ul id="importWarnings" class="hint"></ul>
+      </div>
       <div id="profileForm"></div>
     </section>
 
