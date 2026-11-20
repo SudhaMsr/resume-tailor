@@ -8,6 +8,7 @@ const { sanitizeCv } = require('./validate');
 const { cvFileName } = require('./render');
 const { extractText } = require('./extract');
 const { parseCvText } = require('./parse');
+const { buildPrep } = require('./interview');
 
 const PORT = Number(process.env.PORT || 8080);
 const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || '';
@@ -102,6 +103,13 @@ async function handleApi(req, res, url) {
     if (!cv.basics.name.trim()) return json(res, 400, { error: 'Your CV needs a name.' });
     const result = await gate(() => tailorCv({ cv, jobText, maxPages }));
     return json(res, 200, result);
+  }
+  if (url.pathname === '/api/interview') {
+    const jobText = typeof body.job === 'string' ? body.job.slice(0, MAX_JOB) : '';
+    if (jobText.trim().length < 40) return json(res, 400, { error: 'Please paste the job description (at least a few lines).' });
+    const cv = sanitizeCv(body.cv);
+    if (!cv.basics.name.trim()) return json(res, 400, { error: 'Your CV needs a name.' });
+    return json(res, 200, buildPrep({ cv, jobText, company: typeof body.company === 'string' ? body.company.slice(0, 60) : '' }));
   }
   if (url.pathname === '/api/render') {
     const cv = sanitizeCv(body.cv);
